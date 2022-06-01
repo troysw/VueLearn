@@ -10,7 +10,11 @@
     <img src="./assets/logo.png" class="logo"/>
   </div>
 
-  <Container :AppData="AppData" :step="step" :uploadUrl="uploadUrl"/>
+  <Container 
+  :AppData="AppData" 
+  :step="step" 
+  :uploadUrl="uploadUrl"
+  @write="write= $event" />
 
   <button @click="more" >더보기</button>
 
@@ -34,10 +38,11 @@ export default {
   name: 'App',
   data(){
     return{
+      write:'',
       step : 0,
       AppData : AppData,
       moreCount : 0,
-      uploadUrl : Blob,
+      uploadUrl : String,
     }
   },
   methods :{
@@ -59,11 +64,11 @@ export default {
       var myBoard = {
         name: "Kim Hyun",
         userImage: "https://placeimg.com/100/100/arch",
-        postImage: "",
+        postImage: this.uploadUrl,
         likes: 36,
         date: "May 15",
         liked: false,
-        content: "오늘 무엇을 했냐면요 아무것도 안했어요 ?",
+        content: this.write,
         filter: "perpetua"
       };
       this.AppData.unshift(myBoard);

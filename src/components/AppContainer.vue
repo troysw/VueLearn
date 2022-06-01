@@ -8,12 +8,13 @@
   <div v-if="step == 1">  
       <div class="upload-image" :style="{backgroundImage : `url(${uploadUrl})`}"></div>
       <div class="filters">
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-      <div class="filter-1"></div>
-    </div>
+      <FilterBox v-for="filter in AppFilter" :key="filter" 
+      :uploadUrl="uploadUrl" 
+      :AppFilter="filter"
+      >
+      {{filter}}
+      </FilterBox>  
+      </div>
   </div>
 
 
@@ -21,7 +22,7 @@
   <div v-if="step == 2">
     <div class="upload-image" :style="{backgroundImage : `url(${uploadUrl})`}"></div>
     <div class="write">
-      <textarea class="write-box">write!</textarea>
+      <textarea class="write-box" @input="$emit('write', $event.target.value)">write!</textarea>
     </div>
   </div>
 </div>
@@ -29,15 +30,24 @@
 
 <script>
 import AppPost from './AppPost.vue'
+import FilterBox from './FilterBox.vue'
 export default {
 name: 'AppContainer',
+data(){
+  return{
+    AppFilter : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", 
+"inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", 
+"reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
+  }
+},
 props : {
   AppData : Array,
   step : Number,
-  uploadUrl : Blob,
+  uploadUrl : String,
   },
 components: {
   Post : AppPost,
+  FilterBox,
   },
 }
 </script>
